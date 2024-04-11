@@ -15,7 +15,8 @@
   text-transform: uppercase;
 }
 
-.button:hover {
+.button:hover,
+.button:focus {
   background-color: rgba(173, 187, 228, 1);
   background-image: linear-gradient(
     152deg,
