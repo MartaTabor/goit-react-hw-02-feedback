@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Section } from './Section';
 import { FeedbackOptions } from './FeedbackOptions';
 import { Statistics } from './Statistics';
+import { Notification } from './Notification';
 
 const INITIAL_STATE = {
   good: 0,
@@ -10,13 +12,14 @@ const INITIAL_STATE = {
 
 export const App = () => {
   const [feedback, setFeedback] = useState({ ...INITIAL_STATE });
-  const options = Object.keys(INITIAL_STATE);
+  const [showStats, setShowStats] = useState(false);
 
   const handleFeedback = option => {
     setFeedback(prevFeedback => ({
       ...prevFeedback,
       [option]: prevFeedback[option] + 1,
     }));
+    setShowStats(true);
   };
 
   const { good, neutral, bad } = feedback;
@@ -25,14 +28,27 @@ export const App = () => {
 
   return (
     <div>
-      <FeedbackOptions options={options} onLeaveFeedback={handleFeedback} />
-      <Statistics
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        total={total}
-        positivePercentage={positivePercentage}
-      />
+      <Section title="Please Leave Feedback">
+        <FeedbackOptions
+          options={Object.keys(INITIAL_STATE)}
+          onLeaveFeedback={handleFeedback}
+        />
+      </Section>
+
+      <Section title="Statistics">
+        {showStats ? (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
+        ;
+      </Section>
     </div>
   );
 };

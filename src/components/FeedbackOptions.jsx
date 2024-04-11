@@ -1,4 +1,6 @@
-export const FeedbackOptions = (options, onLeaveFeedback) => {
+import PropTypes from 'prop-types';
+
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
     <div>
       {options.map(option => (
@@ -8,4 +10,8 @@ export const FeedbackOptions = (options, onLeaveFeedback) => {
       ))}
     </div>
   );
+};
+
+FeedbackOptions.propTypes = {
+  option: PropTypes.string,
 };
